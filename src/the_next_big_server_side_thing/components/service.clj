@@ -37,12 +37,12 @@
       bootstrap/dev-interceptors))
 
 (defn runnable-service [config routes service]
-  (let [env     (:environment config)
-        port    (:dev-port config)
-        service (base-service routes port)]
+  (let [env          (:environment config)
+        port         (:dev-port config)
+        service-conf (base-service routes port)]
     (-> (if (= :prod env)
-          (prod-init service)
-          (dev-init service))
+          (prod-init service-conf)
+          (dev-init service-conf))
         (system-interceptors service))))
 
 (defrecord Service [config routes]

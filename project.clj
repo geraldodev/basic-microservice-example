@@ -16,6 +16,7 @@
                  [http-kit "2.2.0"]
                  [com.stuartsierra/component "0.3.2"]
                  [prismatic/schema "1.1.7"]
+                 [cheshire "5.8.0"]
 
                  [ch.qos.logback/logback-classic "1.1.8" :exclusions [org.slf4j/slf4j-api]]
                  [org.slf4j/jul-to-slf4j "1.7.22"]

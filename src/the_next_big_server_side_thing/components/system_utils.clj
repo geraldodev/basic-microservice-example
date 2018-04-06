@@ -27,6 +27,9 @@
 (defn stop-components! []
   (swap! system #(component/stop %)))
 
+(defn clear-components! []
+  (reset! system nil))
+
 (defn stop-system! []
   (stop-components!)
   (shutdown-agents))

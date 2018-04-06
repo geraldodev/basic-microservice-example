@@ -21,13 +21,17 @@
 (def local-config-map {:environment :dev
                        :dev-port    8080})
 
+;; all the components that will be available in the pedestal http request map
+(def web-app-deps
+  [:config :routes :http])
+
 (defn base []
   (component/system-map
     :config    (config/new-config base-config-map)
     :http-impl (component/using (http-kit/new-http-client) [:config])
     :http      (component/using (http/new-http) [:config :http-impl])
     :routes    (routes/new-routes #'the-next-big-server-side-thing.service/routes)
-    :service   (component/using (service/new-service) [:config :routes :http])
+    :service   (component/using (service/new-service) web-app-deps)
     :servlet   (component/using (dev-servlet/new-servlet) [:service])))
 
 (defn e2e []
