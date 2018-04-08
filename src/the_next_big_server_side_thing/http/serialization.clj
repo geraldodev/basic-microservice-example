@@ -1,9 +1,9 @@
 (ns the-next-big-server-side-thing.http.serialization
   (:require [cheshire.core :refer [parse-string generate-string]]
+            [clojure.edn :as edn]
             [clojure.walk :as walk]
             [clojure.string :as str]
-            [schema.core :as s]
-            ))
+            [schema.core :as s]))
 
 (def string-or-keyword (s/if keyword? s/Keyword s/Str))
 
@@ -31,7 +31,6 @@
   (walk/postwalk (replace-char-gen \_ \- underscore->dash-exceptions) json-doc))
 
 (defn write-json [data]
-  (println "asdfasdfsadfasdsadfasdfsadfsa")
   (-> data
       dash->underscore
       generate-string))
@@ -40,3 +39,10 @@
   (-> data
       underscore->dash
       (read-json true)))
+
+(s/defn read-edn [v :- s/Str]
+  (if (string? v) (edn/read-string {:readers *data-readers*} v) v))
+
+(s/defn write-edn :- s/Str
+  [v :- (s/pred coll?)]
+  (pr-str v))

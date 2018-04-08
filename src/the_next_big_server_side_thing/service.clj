@@ -7,13 +7,12 @@
 
 (defn about-page
   [request]
-  (ring-resp/response (format "Clojure %s - served from %s"
-                              (clojure-version)
-                              (route/url-for ::about-page))))
+  (ring-resp/response {:version (format "Clojure %s - served from %s"
+                                        (clojure-version)
+                                        (route/url-for ::about-page))}))
 
 (defn customer-page
   [request]
-  (clojure.pprint/pprint request)
   (let [{:keys [http]} (:components request)
         customer       (controller/get-customer! "bob" http)]
     (ring-resp/response customer)))

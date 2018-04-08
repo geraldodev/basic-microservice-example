@@ -10,7 +10,7 @@
     ["http://customer-service.com/by-name/bob" {:body {:name "bob"}}]
     (assoc world
            :customer-http-resp
-           (GET :json "/customer" 200))))
+           (GET "/customer" 200))))
 
 (flow "check service version"
   aux.init/init!

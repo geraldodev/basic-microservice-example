@@ -43,10 +43,6 @@
                     :url   url}}))))
 
 (defn update-atom! [{:keys [requests responses]} unrendered rendered]
-  ;; We can lookup requests in this map via lookup key, which has precedence of
-  ;; :local > :remote > :url.
-  ;; Conj this request onto the end of the vector of requests that have been
-  ;; made for this lookup key
   (let [lookup-key (lookup-key unrendered)]
     (swap! requests update-in [lookup-key] #(conj (or % []) rendered))
     (let [raw-response (find-response unrendered (current-responses responses))]

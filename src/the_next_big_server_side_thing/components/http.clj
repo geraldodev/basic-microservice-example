@@ -1,5 +1,6 @@
 (ns the-next-big-server-side-thing.components.http
   (:require [com.stuartsierra.component :as component]
+            [the-next-big-server-side-thing.http.serialization :as serialization]
             [the-next-big-server-side-thing.protocols.http-client :as h-pro]))
 
 (defn- render-body
@@ -75,8 +76,8 @@
   {:method             :get
    :user-agent         "http-kit / your org"
    :headers            default-headers
-   :serialize          identity ;(comp write-json dash->underscore)
-   :deserialize        identity ;(comp underscore->dash read-json)
+   :serialize          serialization/write-json
+   :deserialize        serialization/read-json
    :timeout            30000   ; 30 second timeout
    :keepalive          120000  ; 120 second keepalive
    ;:filter             (mb-filter 5) ; <5MB

@@ -2,6 +2,7 @@
   (:require [the-next-big-server-side-thing.protocols.http-client :as http-client]))
 
 (defn get-customer! [customer-name http]
-  (http-client/req! http {:url    (str "http://customer-service.com/by-name/"
-                                       customer-name)
-                          :method :get}))
+  (let [url  (str "http://customer-service.com/by-name/" customer-name)
+        resp (http-client/req! http {:url url :method :get})]
+    resp))
+
