@@ -13,34 +13,42 @@
            (GET "/customer" 200))))
 
 (defn create-account! [customer-id world]
-  (assoc world :created-account nil))
+  (assoc world
+         :created-account
+         (POST "/account/" {:customer-id customer-id} 200)))
 
 (defn account-balance [account-id world]
   (assoc world :account-balance 0))
 
 (defn delete-account! [account-id world]
+  (POST (str "/account/remove/" account-id) 200)
   world)
 
 (defn get-account-from-customer-id [customer-id world]
-  (assoc world :account nil))
+  (let [url (str "/from-customer/account/" customer-id)]
+    (assoc world :account (GET url 200))))
 
 (def bob-id 1)
 
 (flow "create savings account and check balance"
   aux.init/init!
-  aux.init/restart!
+  ;aux.init/restart!
 
   (partial get-account-from-customer-id bob-id)
 
   (fact "There shouldn't be a savings account for bob yet"
-    (:account *world*) => nil)
+    (-> *world* :account :body) => "")
 
-  create-account!
+  (partial create-account! bob-id)
 
   (partial get-account-from-customer-id bob-id)
 
   (fact "There should now be a savings account for bob"
-    (:account *world*) => nil)
+    (-> *world* :account :body) => nil)
+
+  )
+
+  (comment
 
 
   (partial delete-account! bob-id)

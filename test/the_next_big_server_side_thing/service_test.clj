@@ -1,12 +1,25 @@
 (ns the-next-big-server-side-thing.service-test
-  (:require [clojure.test :refer :all]
-            [io.pedestal.test :refer :all]
-            [io.pedestal.http :as bootstrap]
+  (:require [midje.sweet :refer :all]
+            [the-next-big-server-side-thing.components :as components]
+            [the-next-big-server-side-thing.http-helpers :refer [GET POST]]
             [the-next-big-server-side-thing.service :as service]))
 
+(components/ensure-system-up! :test-system)
+
+#_(fact "hitting account creation endpoint"
+  (GET "/" 200) => 0)
+#_(fact "hitting account creation endpoint"
+  (GET "/baz/bar" 200) => 0)
+#_(fact "hitting account creation endpoint"
+  (GET "/from-customer/account/" 200) => 0)
+#_(fact "we can get user links"
+  (POST "/customer/100" 200) => 0)
+(fact "hitting account creation endpoint"
+  (POST "/account/" {:customer-id 2} 200) => 0)
+
 (comment 
-(def service
-  (::bootstrap/service-fn (bootstrap/create-servlet service/service)))
+;(def service
+  ;(::bootstrap/service-fn (bootstrap/create-servlet service/service)))
 
 (deftest home-page-test
   (is (=
