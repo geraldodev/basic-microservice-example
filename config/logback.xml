@@ -13,7 +13,7 @@
 
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
       <!-- rollover daily -->
-      <fileNamePattern>logs/the-next-big-server-side-thing-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <fileNamePattern>logs/basic-microservice-example-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
       <!-- or whenever the file size reaches 64 MB -->
       <maxFileSize>64 MB</maxFileSize>
     </rollingPolicy>

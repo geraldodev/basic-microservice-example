@@ -1,4 +1,4 @@
-(defproject the-next-big-server-side-thing "0.0.1-SNAPSHOT"
+(defproject basic-microservice-example "0.0.1-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
@@ -27,10 +27,10 @@
   :resource-paths ["config", "resources"]
   ;; If you use HTTP/2 or ALPN, use the java-agent to pull in the correct alpn-boot dependency
   ;:java-agents [[org.mortbay.jetty.alpn/jetty-alpn-agent "2.0.5"]]
-  :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "the-next-big-server-side-thing.server/run-dev"]}
+  :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "basic-microservice-example.server/run-dev"]}
                    :dependencies [[midje "1.9.1"]
                                   [nubank/postman "0.0.1"]
                                   [io.pedestal/pedestal.service-tools "0.5.3"]]}
-             :uberjar {:aot [the-next-big-server-side-thing.server]}}
-  :main ^{:skip-aot true} the-next-big-server-side-thing.server)
+             :uberjar {:aot [basic-microservice-example.server]}}
+  :main ^{:skip-aot true} basic-microservice-example.server)
 
