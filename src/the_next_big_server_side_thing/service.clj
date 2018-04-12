@@ -3,6 +3,7 @@
             [io.pedestal.http.route :as route]
             [io.pedestal.http.body-params :as body-params]
             [the-next-big-server-side-thing.controller :as controller]
+            [the-next-big-server-side-thing.interceptors.error-info :as error-info]
             [ring.util.response :as ring-resp]))
 
 (defn about-page
@@ -21,10 +22,8 @@
   [request]
   (ring-resp/response "Hello World!"))
 
-;; Defines "/" and "/about" routes with their associated :get handlers.
-;; The interceptors defined after the verb map (e.g., {:get home-page}
-;; apply to / and its children (/about).
-(def common-interceptors [(body-params/body-params) http/html-body])
+(def common-interceptors
+  [(body-params/body-params) http/html-body error-info/log-error-during-debugging])
 
 ;; Tabular routes
 (def routes #{["/" :get (conj common-interceptors `home-page)]
