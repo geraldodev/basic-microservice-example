@@ -1,6 +1,6 @@
 # basic-microservice-example
 
-FIXME
+A very simplistic example of how nubank organizes and tests microservices
 
 ## Getting Started
 

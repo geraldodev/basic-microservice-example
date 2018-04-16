@@ -2,12 +2,14 @@
   (:require [basic-microservice-example.aux.init :as aux.init]
             [basic-microservice-example.components.mock-http :as mock-http]
             [basic-microservice-example.http-helpers :refer [GET POST]]
+            [matcher-combinators.matchers :refer [in-any-order embeds equals]]
+            [matcher-combinators.midje :refer [match]]
             [midje.sweet :refer :all]
             [postman.flow :refer [*world* flow defnq]]))
 
 ;; helpers
 ;; ------------------
-;; effectful transition
+;; postman transition (effectful)
 (defn create-account! [{:keys [customer-id] :as world}]
   (let [customer-url (str "http://customer-service.com/customer/" customer-id)
         url          "/account/"
@@ -20,7 +22,7 @@
            :created-account resp-body
            :account-id      (-> resp-body :account :id))))
 
-;; effectful transition
+;; postman transition (effectful)
 (defn delete-account! [{:keys [account-id] :as world}]
   (POST (str "/account/remove/" account-id) 200)
   world)
@@ -31,7 +33,7 @@
         resp-body (:body (GET url status))]
     (assoc world :account-lookup resp-body)))
 
-;; query: can be retried if following check fails
+;; postman query: can be retried if following check fails
 (defnq lookup-missing-account [world]
   (lookup-account-from-customer-id 400 world))
 
@@ -50,9 +52,16 @@
   create-account!
 
   (fact "There should now be a savings account for bob"
-    (:created-account *world*) => (just {:account (just {:customer-id uuid?
-                                                         :id          uuid?
-                                                         :name        "bob"})}))
+    (:created-account *world*) => (contains {:account (contains {:customer-id uuid?
+                                                                 :id          uuid?
+                                                                 :name        "bob"})}))
+
+  (fact "There should now be a savings account for bob"
+    (:created-account *world*) => (match {:account {:customer-id uuid?
+                                                    :id          uuid?
+                                                    :name        "bob"}}))
+
+
   delete-account!
 
   lookup-missing-account
