@@ -1,17 +1,11 @@
 (defproject basic-microservice-example "0.0.1-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :description "Very simplistic example of how nubank organizes and tests microservices"
+  :url "https://github.com/nubank/basic-microservice-example"
+  :license {:name "Apache License, Version 2.0"}
   :plugins [[lein-midje "3.2.1"]]
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [io.pedestal/pedestal.service "0.5.3"]
-                 ;; Remove this line and uncomment one of the next lines to
-                 ;; use Immutant or Tomcat instead of Jetty:
-
                  [io.pedestal/pedestal.jetty "0.5.3"]
-                 ;; [io.pedestal/pedestal.immutant "0.5.3"]
-                 ;; [io.pedestal/pedestal.tomcat "0.5.3"]
 
                  [http-kit "2.2.0"]
                  [com.stuartsierra/component "0.3.2"]
