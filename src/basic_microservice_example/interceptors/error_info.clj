@@ -7,10 +7,9 @@
           (protocols.debug-logger/register-last-error! error)))
 
 (def log-error-during-debugging
- ; {:name ::catch :error })
   (interceptor.error/error-dispatch [ctx ex]
     :else
     (do
-    (register-error-for-debugging ctx ex)
-    (assoc ctx :io.pedestal.interceptor.chain/error ex))))
+      (register-error-for-debugging ctx ex)
+      (assoc ctx :io.pedestal.interceptor.chain/error ex))))
 

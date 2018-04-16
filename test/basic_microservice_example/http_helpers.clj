@@ -35,9 +35,6 @@
 
 
 (defn- print-last-interceptor-error [status]
-  (println status)
-  #_(println (some-> (bootstrap-debug-logger-service)
-                                  protocols.debug-logger/get-last-error))
   (when (<= 400 status 600)
     (when-let [last-error (some-> (bootstrap-debug-logger-service)
                                   protocols.debug-logger/get-last-error
@@ -49,11 +46,8 @@
 
 (defn- assert-status! [method uri status expected-status deserialized-resp]
   (let [assertion (= status expected-status)]
-    (println "_________________")
     (when-not assertion
-      (print-last-interceptor-error status)
-      (println "00000000000000")
-      )
+      (print-last-interceptor-error status))
     (assert assertion
             (str method " request to '" uri "' expected status of "
                  expected-status ", but received "

@@ -10,9 +10,3 @@
     (storage-client/clear-all! (:storage system))
     (-> world
         (assoc :system system))))
-
-(defn restart! [world]
-  (system-utils/clear-components!)
-  (let [system (components/ensure-system-up! :test-system)]
-    (-> world
-        (assoc :system system))))

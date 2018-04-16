@@ -1,64 +1,69 @@
 (ns basic-microservice-example.customer-flow-test
-  (:require [midje.sweet :refer :all]
-            [postman.flow :refer [*world* flow]]
-            [basic-microservice-example.aux.init :as aux.init]
+  (:require [basic-microservice-example.aux.init :as aux.init]
             [basic-microservice-example.components.mock-http :as mock-http]
-            [basic-microservice-example.http-helpers :refer [GET POST]]))
+            [basic-microservice-example.http-helpers :refer [GET POST]]
+            [midje.sweet :refer :all]
+            [postman.flow :refer [*world* flow defnq]]))
 
-(defn get-customer! [id world]
-  (mock-http/with-responses
-    ["http://customer-service.com/by-name/bob" {:body {:name "bob"}}]
+;; helpers
+;; ------------------
+;; effectful transition
+(defn create-account! [{:keys [customer-id] :as world}]
+  (let [customer-url (str "http://customer-service.com/customer/" customer-id)
+        url          "/account/"
+        resp-body    (mock-http/with-responses
+                      [customer-url {:body {:customer-name "bob"}}]
+                      (-> url
+                          (POST {:customer-id customer-id} 200)
+                          :body))]
     (assoc world
-           :customer-http-resp
-           (GET "/customer" 200))))
+           :created-account resp-body
+           :account-id      (-> resp-body :account :id))))
 
-(defn create-account! [customer-id world]
-  (assoc world
-         :created-account
-         (POST "/account/" {:customer-id customer-id} 200)))
-
-(defn account-balance [account-id world]
-  (assoc world :account-balance 0))
-
-(defn delete-account! [account-id world]
+;; effectful transition
+(defn delete-account! [{:keys [account-id] :as world}]
   (POST (str "/account/remove/" account-id) 200)
   world)
 
-(defn get-account-from-customer-id [customer-id world]
-  (let [url (str "/from-customer/account/" customer-id)]
-    (assoc world :account (GET url 200))))
+(defn lookup-account-from-customer-id
+  [status {:keys [customer-id] :as world}]
+  (let [url       (str "/account/from-customer/" customer-id)
+        resp-body (:body (GET url status))]
+    (assoc world :account-lookup resp-body)))
 
-(def bob-id 1)
+;; query: can be retried if following check fails
+(defnq lookup-missing-account [world]
+  (lookup-account-from-customer-id 400 world))
 
-(flow "create savings account and check balance"
+;; flows
+;; ------------------
+(flow "create savings account, look it up, and close it"
   aux.init/init!
-  ;aux.init/restart!
 
-  (partial get-account-from-customer-id bob-id)
+  (fn [world] (assoc world :customer-id (java.util.UUID/randomUUID)))
+
+  lookup-missing-account
 
   (fact "There shouldn't be a savings account for bob yet"
-    (-> *world* :account :body) => "")
+    (:account-lookup *world*) => {})
 
-  (partial create-account! bob-id)
-
-  (partial get-account-from-customer-id bob-id)
+  create-account!
 
   (fact "There should now be a savings account for bob"
-    (-> *world* :account :body) => nil)
+    (:created-account *world*) => (just {:account (just {:customer-id uuid?
+                                                         :id          uuid?
+                                                         :name        "bob"})}))
+  delete-account!
 
-  )
-
-  (comment
-
-
-  (partial delete-account! bob-id)
-
-  (partial get-account-from-customer-id bob-id)
+  lookup-missing-account
 
   (fact "After deleting the savings account it can no longer be found"
-    (:account *world*) => nil)
-  )
+    (:account-lookup *world*) => {}))
 
+
+
+;; notes
+;; ------------------
 ;; logging at each step
-;; retry logic baked in
+;; retry logic baked in (for e2e tests)
 ;; offers some measure of uniformity and re-use

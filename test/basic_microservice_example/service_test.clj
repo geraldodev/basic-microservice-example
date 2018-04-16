@@ -14,7 +14,7 @@
   (GET "/from-customer/account/" 200) => 0)
 #_(fact "we can get user links"
   (POST "/customer/100" 200) => 0)
-(fact "hitting account creation endpoint"
+#_(fact "hitting account creation endpoint"
   (POST "/account/" {:customer-id 2} 200) => 0)
 
 (comment 

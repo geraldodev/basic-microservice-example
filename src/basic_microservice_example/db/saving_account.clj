@@ -4,8 +4,7 @@
 
 (defn build-assocer [account]
   (fn [m]
-    (do (println "&&&&\t" m)
-    (assoc m (:id account) account))))
+    (assoc m (:id account) account)))
 
 (defn add-account! [account storage]
   (storage-client/put! storage

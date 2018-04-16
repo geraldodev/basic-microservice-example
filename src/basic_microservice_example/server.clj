@@ -1,9 +1,6 @@
 (ns basic-microservice-example.server
   (:gen-class)
-  (:require [io.pedestal.http :as server]
-            [io.pedestal.http.route :as route]
-            [basic-microservice-example.components :as components]
-            [basic-microservice-example.service :as service]))
+  (:require [basic-microservice-example.components :as components]))
 
 (defn run-dev
   "The entry-point for 'lein run-dev'"

@@ -80,7 +80,6 @@
    :deserialize        serialization/read-json
    :timeout            30000   ; 30 second timeout
    :keepalive          120000  ; 120 second keepalive
-   ;:filter             (mb-filter 5) ; <5MB
    :follow-redirects   false
    :as                 :text})
 
