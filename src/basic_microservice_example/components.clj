@@ -32,7 +32,7 @@
     :config    (config/new-config base-config-map)
     :http-impl (component/using (http-kit/new-http-client) [:config])
     :http      (component/using (http/new-http) [:config :http-impl])
-    :storage   (component/using (storage/new-in-memory) [])
+    :storage   (storage/new-in-memory)
     :routes    (routes/new-routes #'basic-microservice-example.service/routes)
     :service   (component/using (service/new-service) web-app-deps)
     :servlet   (component/using (dev-servlet/new-servlet) [:service])))
