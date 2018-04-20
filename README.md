@@ -1,6 +1,6 @@
 # basic-microservice-example
 
-A very simplistic example of how Nubank organizes and tests microservices.
+A simplistic example of how Nubank organizes and tests microservices.
 
 This is a really basic savings account microservice that doesn't really do much other than serve as an example.
 
@@ -45,7 +45,7 @@ Our http client logic is split into two components:
 
 In the case of this example service, we define a rudimentary in-memory storage component. In our actual services we generally use a datomic component.
 
-#### pedestal related components
+#### pedestal-related components
 
 We use pedestal for or http serving layer, but we deconstruct pedestal logic into several different components, deviating from the structure you would see in the pedestal starter template.
 
@@ -99,7 +99,3 @@ lein midje :autotest
 2. Start your service in dev-mode: `(def dev-serv (run-dev))`
 3. Connect your editor to the running REPL session.
    Re-evaluated code will be seen immediately in the service.
-
-## Links
-* [Other examples](https://github.com/pedestal/samples)
-
