@@ -67,7 +67,7 @@ For instance the difference between the dev and mock servlets is that the mock s
 ## Tests
 
 At Nubank we use [Midje](https://github.com/marick/Midje) as our test framework.
-We've structured our integration tests to follow a world-transition system that is encoded in the [`postman` `flow`](https://github.com/nubank/postman) macro.
+We've structured our integration tests to follow a world-transition system that is encoded in the [`selvage` `flow`](https://github.com/nubank/selvage) macro.
 Lastly, to check the form of nested data-structures during testing we employ [`matcher-combinators`](https://github.com/nubank/matcher-combinators).
 
 
@@ -79,7 +79,7 @@ Straw-man examples of what our unit tests may look like can be found in [`contro
 
 A straw-man example of how we do integration testing can be found in [`account-flow`](https://github.com/nubank/basic-microservice-example/blob/master/test/basic_microservice_example/account_flow.cl)
 
-More of an explanation of how `postman` `flow` tests work can be in the [postman repository](https://github.com/nubank/postman).
+More of an explanation of how `selvage` `flow` tests work can be in the [selvage repository](https://github.com/nubank/selvage).
 
 ### Running tests
 

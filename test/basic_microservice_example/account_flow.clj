@@ -7,7 +7,7 @@
             [matcher-combinators.matchers :refer [in-any-order embeds equals]]
             [matcher-combinators.midje :refer [match]]
             [midje.sweet :refer :all]
-            [postman.flow :refer [*world* flow]]))
+            [selvage.flow :refer [*world* flow]]))
 
 (defn init!
   "Start the test system, which has the http component mocked, storing it in the world"

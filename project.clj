@@ -21,7 +21,7 @@
   :resource-paths ["config", "resources"]
   :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "basic-microservice-example.server/run-dev"]}
                    :dependencies [[midje "1.9.1"]
-                                  [nubank/postman "0.0.1"]
+                                  [nubank/selvage "0.0.1"]
                                   [nubank/matcher-combinators "0.2.4"]
                                   [io.pedestal/pedestal.service-tools "0.5.3"]]}
              :uberjar {:aot [basic-microservice-example.server]}}

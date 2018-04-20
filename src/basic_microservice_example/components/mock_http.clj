@@ -29,7 +29,7 @@
 (defn- find-response [{:keys [url] :as unrendered} responses]
   ;; Unsupported: multiple requests to one URI expected to have different
   ;; responses We render a full body with the exception to ensure it is visible
-  ;; within postman test failure output
+  ;; within selvage test failure output
   (let [candidates (map  (fn [[k resp]] [(response-key->pred k) resp]) responses)
         resp       (some (fn [[k-pred resp]] (when (k-pred unrendered) resp)) candidates)]
     (or resp
