@@ -8,6 +8,10 @@
 (defn- str->uuid [id-str]
   (read-string (str "#uuid \"" id-str "\"")))
 
+(defn home-page
+  [request]
+  (ring-resp/response {:message "Hello World!"}))
+
 (defn customer->account
   [{{:keys [customer-id]} :path-params
     {:keys [storage]} :components}]
@@ -40,7 +44,8 @@
   [(body-params/body-params) http/html-body error-info/log-error-during-debugging])
 
 (def routes
-  #{["/account/" :post (conj common-interceptors `create-account)]
+  #{["/" {:get home-page}]
+    ["/account/" :post (conj common-interceptors `create-account)]
     ["/account/from-customer/:customer-id/" :get (conj common-interceptors `customer->account)]
     ["/account/lookup/:account-id/" :get (conj common-interceptors `get-account)]
     ["/account/remove/:account-id/" :post (conj common-interceptors `delete-account)]})
