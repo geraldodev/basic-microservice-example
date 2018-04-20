@@ -58,13 +58,6 @@
   create-account!
 
   (fact "There should now be a savings account for Bob"
-    (:created-account *world*) => (contains
-                                    {:account (just
-                                                {:customer-id uuid?
-                                                 :id          uuid?
-                                                 :name        "bob"})}))
-
-  #_(fact "(matcher-combinators) There should now be a savings account for Bob"
     (:created-account *world*) => (match {:account (equals {:customer-id uuid?
                                                             :id          uuid?
                                                             :name        "bob"})})))

@@ -1,7 +1,6 @@
 (ns basic-microservice-example.components.system-utils
-  (:import [clojure.lang ExceptionInfo])
-  (:require [com.stuartsierra.component :as component]
-            [schema.core :as s]))
+  (:require [com.stuartsierra.component :as component])
+  (:import [clojure.lang ExceptionInfo]))
 
 (def system (atom nil))
 
@@ -11,13 +10,13 @@
     (catch ExceptionInfo ex
       (throw (or (.getCause ex) ex)))))
 
-(s/defn start-system! []
+(defn start-system! []
   (swap! system quiet-start))
 
-(s/defn get-component [component-name]
+(defn get-component [component-name]
   (some-> system deref (get component-name)))
 
-(s/defn get-component! [c]
+(defn get-component! [c]
   (or (get-component c)
       (throw (ex-info "Component not found"
                       {:from      ::get-component!
@@ -34,10 +33,10 @@
   (stop-components!)
   (shutdown-agents))
 
-(s/defn ^:private system-for-env [environment systems]
+(defn ^:private system-for-env [environment systems]
   (get systems environment (:base-system systems)))
 
-(s/defn bootstrap! [systems-map environment]
+(defn bootstrap! [systems-map environment]
   (let [system-map ((system-for-env environment systems-map))]
     (->> system-map
          component/start

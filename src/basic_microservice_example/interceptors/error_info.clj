@@ -7,6 +7,9 @@
           (protocols.debug-logger/register-last-error! error)))
 
 (def log-error-during-debugging
+  ;; hacky way to grab an exception as it is being propagated upwards and
+  ;; register it for debug logging. Eventually find a more basic way to do
+  ;; this.
   (interceptor.error/error-dispatch [ctx ex]
     :else
     (do

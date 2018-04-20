@@ -7,7 +7,10 @@
 (defn- add-system [service]
   (before (fn [context] (assoc-in context [:request :components] service))))
 
-(defn system-interceptors [service-map service]
+(defn system-interceptors 
+  "Extend to service's interceptors to include one to inject the components
+   into the request object"
+  [service-map service]
   (update-in service-map 
              [::bootstrap/interceptors]
              #(vec (->> % (cons (add-system service))))))

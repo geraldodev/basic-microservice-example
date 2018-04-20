@@ -1,14 +1,9 @@
 (ns basic-microservice-example.db.saving-account
-  (:require [schema.core :as s]
-            [basic-microservice-example.protocols.storage-client :as storage-client]))
-
-(defn build-assocer [account]
-  (fn [m]
-    (assoc m (:id account) account)))
+  (:require [basic-microservice-example.protocols.storage-client :as storage-client]))
 
 (defn add-account! [account storage]
   (storage-client/put! storage
-                       (build-assocer account)))
+                       #(assoc % (:id account) account)))
 
 (defn remove-account! [account-id storage]
   (storage-client/put! storage #(dissoc % account-id)))

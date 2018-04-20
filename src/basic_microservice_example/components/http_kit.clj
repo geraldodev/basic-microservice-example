@@ -1,7 +1,7 @@
 (ns basic-microservice-example.components.http-kit
   (:require [com.stuartsierra.component :as component]
             [org.httpkit.client :as http-kit]
-            [basic-microservice-example.protocols.http-client :as protocols.http-client]
+            [basic-microservice-example.protocols.http-client :as http-client]
             [schema.core :as s]
             [clojure.string :as str]))
 
@@ -11,7 +11,7 @@
    :follow-redirects :insecure?])
 
 (defrecord HttpKit []
-  protocols.http-client/HttpClient
+  http-client/HttpClient
   (req! [_ {:keys [url method] :as req-map}]
     ;; Use only the keys that http-kit understands
     (let [valid-http-kit-req (select-keys req-map http-kit-keys)

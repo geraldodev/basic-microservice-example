@@ -1,7 +1,7 @@
 (ns basic-microservice-example.components.http
   (:require [com.stuartsierra.component :as component]
             [basic-microservice-example.http.serialization :as serialization]
-            [basic-microservice-example.protocols.http-client :as h-pro]))
+            [basic-microservice-example.protocols.http-client :as http-client]))
 
 (defn- render-body
   "If we have a payload, use the serialize function from the request map to
@@ -16,7 +16,7 @@
 (defn- request-sync!
   "add the response details to the request map"
   [req-map http-impl]
-  (assoc req-map :response (h-pro/req! http-impl req-map)))
+  (assoc req-map :response (http-client/req! http-impl req-map)))
 
 (defn- parse-body
   "If we have a body, use the deserialize function from the request map to
@@ -51,9 +51,9 @@
   ;; Component starts with a default request map
   ;; This default map can be overridden on a per-request basis
 
-  h-pro/HttpClient
+  http-client/HttpClient
   (req! [this req-map]
-    (h-pro/req! this defaults req-map))
+    (http-client/req! this defaults req-map))
   (req! [this default-req-map req-map]
     (let [request (render-req default-req-map req-map)]
       (do-req-resp! request this)))
