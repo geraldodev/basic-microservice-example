@@ -99,3 +99,12 @@ lein midje :autotest
 2. Start your service in dev-mode: `(def dev-serv (run-dev))`
 3. Connect your editor to the running REPL session.
    Re-evaluated code will be seen immediately in the service.
+
+## Missing aspects
+
+Since this is a simple example of how Nubank's microservices are structured, many aspects are missing:
+
+ - endpoint schemas: our service http and kafka endpoints are always annotated with schemas.
+ - better adapter examples: since endpoint schemas aren't a part of this example, our adapters from external to internal data representations aren't very interesting or representative.
+ - kafka component: we make heavy use of kafka and have wrapped producer and consumer logic in components and also developed mocks for them.
+ - and much more: datomic component, proper config component that does a waterfall of overriding, etc.
