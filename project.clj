@@ -24,12 +24,19 @@
   :min-lein-version "2.0.0"
   :resource-paths ["config", "resources"]
   :aliases {"clj-kondo" ["with-profile" "+clj-kondo" "run" "-m" "clj-kondo.main"]
-            "lint" ["with-profile" "+clj-kondo" "run" "-m" "clj-kondo.main" "--lint" "."]}
+            "lint" ["with-profile" "+clj-kondo" "run" "-m" "clj-kondo.main" "--lint" "src" "--lint" "src:test"]
+            "dev" ["with-profile" "+dev" "repl"]}
   :profiles {:clj-kondo {:dependencies [[clj-kondo "RELEASE"]]}
              :dev {:aliases { "run-dev" ["trampoline" "run" "-m" "basic-microservice-example.server/run-dev"] }
+                   :repl-options {:init-ns user}
+                   :source-paths ["dev"]
                    :dependencies [[midje "1.9.9"]
                                   [nubank/selvage "0.0.1"]
                                   [nubank/matcher-combinators "1.2.1"]
+                                  [org.clojure/tools.namespace "0.3.1"]
+                                  [org.clojure/java.classpath "0.3.0"]
+                                  [criterium "0.4.5"]
+                                  [cider/orchard "0.5.1"]
                                   [io.pedestal/pedestal.service-tools "0.5.7"]]}
              :uberjar {:aot [basic-microservice-example.server]}}
   :main ^{:skip-aot true} basic-microservice-example.server)
