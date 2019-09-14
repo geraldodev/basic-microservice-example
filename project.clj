@@ -4,6 +4,7 @@
   :license {:name "Apache License, Version 2.0"}
   :repositories [["sonatype" {:url "https://oss.sonatype.org/content/repositories/releases"}]]
   :plugins [[lein-midje "3.2.1"]
+            [jonase/eastwood "0.3.5"]
             [lein-ancient "0.6.15"]]
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/core.rrb-vector "0.0.14"]
@@ -22,7 +23,9 @@
                  [org.slf4j/log4j-over-slf4j "1.7.28"]]
   :min-lein-version "2.0.0"
   :resource-paths ["config", "resources"]
-  :profiles {:dev {:aliases { "run-dev" ["trampoline" "run" "-m" "basic-microservice-example.server/run-dev"] }
+  :aliases {"clj-kondo" ["with-profile" "+clj-kondo" "run" "-m" "clj-kondo.main"]}
+  :profiles {:clj-kondo {:dependencies [[clj-kondo "RELEASE"]]}
+             :dev {:aliases { "run-dev" ["trampoline" "run" "-m" "basic-microservice-example.server/run-dev"] }
                    :dependencies [[midje "1.9.9"]
                                   [nubank/selvage "0.0.1"]
                                   [nubank/matcher-combinators "1.2.1"]
