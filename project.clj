@@ -23,7 +23,8 @@
                  [org.slf4j/log4j-over-slf4j "1.7.28"]]
   :min-lein-version "2.0.0"
   :resource-paths ["config", "resources"]
-  :aliases {"clj-kondo" ["with-profile" "+clj-kondo" "run" "-m" "clj-kondo.main"]}
+  :aliases {"clj-kondo" ["with-profile" "+clj-kondo" "run" "-m" "clj-kondo.main"]
+            "lint" ["with-profile" "+clj-kondo" "run" "-m" "clj-kondo.main" "--lint" "."]}
   :profiles {:clj-kondo {:dependencies [[clj-kondo "RELEASE"]]}
              :dev {:aliases { "run-dev" ["trampoline" "run" "-m" "basic-microservice-example.server/run-dev"] }
                    :dependencies [[midje "1.9.9"]
