@@ -1,7 +1,6 @@
 (ns basic-microservice-example.aux.init
   (:require [basic-microservice-example.components :as components]
             [basic-microservice-example.protocols.storage-client :as storage-client]
-            [basic-microservice-example.components.system-utils :as system-utils]
             [basic-microservice-example.components.mock-http :as mock-http]))
 
 (defn init! [world]

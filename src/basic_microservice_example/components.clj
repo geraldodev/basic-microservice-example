@@ -15,8 +15,6 @@
             [basic-microservice-example.components.http :as http]
             [schema.core :as s]))
 
-(def webapp-deps [:http])
-
 (def base-config-map {:environment :prod
                       :dev-port    8080})
 

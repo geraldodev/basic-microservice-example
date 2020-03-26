@@ -1,9 +1,7 @@
 (ns basic-microservice-example.components.http-kit
   (:require [com.stuartsierra.component :as component]
             [org.httpkit.client :as http-kit]
-            [basic-microservice-example.protocols.http-client :as http-client]
-            [schema.core :as s]
-            [clojure.string :as str]))
+            [basic-microservice-example.protocols.http-client :as http-client]))
 
 (def http-kit-keys
   [:url :method :body :oauth-token :user-agent :headers :form-params

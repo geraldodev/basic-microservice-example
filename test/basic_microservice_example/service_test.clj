@@ -2,8 +2,7 @@
   (:require [midje.sweet :refer :all]
             [matcher-combinators.midje :refer [match]]
             [basic-microservice-example.components :as components]
-            [basic-microservice-example.http-helpers :refer [GET POST]]
-            [basic-microservice-example.service :as service]))
+            [basic-microservice-example.http-helpers :refer [GET POST]]))
 
 (components/ensure-system-up! :test-system)
 
