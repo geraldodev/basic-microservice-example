@@ -1,3 +1,6 @@
+This repo was forked from nubank.
+I've uploaded from my local machine when it was not public anymore.
+
 # basic-microservice-example
 
 A simplistic example of how Nubank organizes and tests microservices.
